@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const _ = require('lodash')
+
 const {getUser} = require('../model/user');
 const Joi = require('joi');
 const express = require('express');
