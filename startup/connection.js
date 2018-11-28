@@ -1,4 +1,5 @@
 const mysqlModel  = require('mysql-model');
+
 const connection = mysqlModel.createConnection({
     host : process.env.DB_HOST,
     user : process.env.DB_USERNAME,
@@ -6,11 +7,13 @@ const connection = mysqlModel.createConnection({
     database: process.env.DB_DATABASE
 })
 
-// connection.connect((err) =>{
-//     if(err){
-//         console.log(err.message);
-//     }
-//     console.log(connection.state);
-// });
+var connection1 = require('mysql').createConnection({
+   
+  });
+
+connection1.connect((err)=>{
+    throw new Error(err.message,err);
+});
+
 
 module.exports = connection;

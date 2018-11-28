@@ -1,4 +1,4 @@
-const connection = require('../connection');
+const connection = require('../startup/connection');
 
 const User = connection.extend({
     tableName: "users",
