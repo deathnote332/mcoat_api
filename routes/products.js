@@ -1,21 +1,16 @@
 const express = require('express');
 const router = express.Router();
-const connection = require('../startup/connection');
 const auth = require('../middleware/auth');
+const Users = require('../model/user');
 
-router.get('/',auth,(req,res)=>{
-    console.log(res.user)
+router.get('/',async (req,res)=>{
+    products = await Products.findAll({attributes: ['id', 'brand','description']})
+    res.json(products);
 })
 
-
-
-function getProducts(offset){
-    return new Promise((resolve,reject) =>{
-        connection.query('SELECT * from products limit 10 offset '+offset, function (err, rows, fields) {
-            if (err) throw err;
-            resolve(rows);
-        })
-    })
-}
+router.get('/:id', async(req,res)=>{
+    products = await Users.findByPk(req.params.id);
+    res.json(products);
+})
 
 module.exports = router;

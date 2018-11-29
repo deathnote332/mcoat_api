@@ -1,19 +1,15 @@
-const mysqlModel  = require('mysql-model');
+const Sequelize = require('sequelize');
+const winston = require('winston');
 
-const connection = mysqlModel.createConnection({
-    host : process.env.DB_HOST,
-    user : process.env.DB_USERNAME,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_DATABASE
-})
-
-var connection1 = require('mysql').createConnection({
-   
-  });
-
-connection1.connect((err)=>{
-    throw new Error(err.message,err);
+const sequelize = new Sequelize(process.env.DB_DATABASE, process.env.DB_USERNAME, process.env.DB_PASSWORD, {
+    host: process.env.DB_HOST,
+    dialect: 'mysql',
+    operatorsAliases: false,
 });
 
+sequelize.authenticate()
+  .then(() => {
+    winston.info('Connection has been established successfully.');
+  })
 
-module.exports = connection;
+  module.exports = sequelize;

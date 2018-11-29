@@ -1,16 +1,32 @@
-const connection = require('../startup/connection');
+const sequelize = require('../startup/connection');
+const Sequelize = require('sequelize');
 
-const User = connection.extend({
-    tableName: "users",
+const User = sequelize.define('users',{
+    first_name:     Sequelize.STRING,
+    last_name:      Sequelize.STRING,
+    middle_name:    Sequelize.STRING,
+    email:          Sequelize.STRING,
+    password:       Sequelize.STRING,
+    remember_token: Sequelize.STRING,
+    created_at:     Sequelize.DATE,
+    updated_at:     Sequelize.DATE,
+    status:         Sequelize.INTEGER,
+    user_type:      Sequelize.INTEGER,
+    warehouse:      Sequelize.INTEGER,
+    active:         Sequelize.INTEGER,
+    is_deleted:     Sequelize.INTEGER,
+}, {
+    timestamps: false,
+    // defaultScope: {
+    //     attributes: { exclude: ['password'] },
+    //   }
+    scopes:{
+        is_deleted:{
+            where:{
+                is_deleted: 0
+            }
+        }
+    }
 });
 
-function getUser(user){
-    return new Promise((resolve,reject)=>{
-       new User().find('first', {where: "email='"+user.email+"'"}, function(err, row) {
-            resolve(row);
-        });
-    })
-}
-
-exports.user = new User();
-exports.getUser = getUser;
+module.exports = User;
