@@ -1,11 +1,10 @@
-const jwt = require('jsonwebtoken');
 const _ = require('lodash')
 const bcrypt = require('bcryptjs');
 const Joi = require('joi');
 const express = require('express');
 const router = express.Router();
 
-const User = require('../model/user');
+const {User,generateToken} = require('../model/user');
 
 router.post('/', async  (req,res)=>{
     const { error } = validate(req.body);
@@ -20,11 +19,8 @@ router.post('/', async  (req,res)=>{
     if(!isValidPass) return res.status(400).send("Invalid eamil or password");
   
     user = _.pick(user,['first_name','last_name','email','status','user_type','warehouse','active']);
-    return res.send(user);
-    
-    // const token  = jwt.sign(_.omit(user_json,['password','remember_token']),process.env.SECRET_TOKEN);
-    return res.header('x-auth-token',token).send(_.omit(user_json,['password','remember_token']));
-    // return res.header('x-auth-token',token).send(token);
+    return res.header('x-auth-token',token).send(generateToken(user));
+   
 })
 
 function validate(req){

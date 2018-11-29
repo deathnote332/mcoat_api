@@ -1,5 +1,6 @@
 const sequelize = require('../startup/connection');
 const Sequelize = require('sequelize');
+const jwt = require('jsonwebtoken');
 
 const User = sequelize.define('users',{
     first_name:     Sequelize.STRING,
@@ -25,8 +26,13 @@ const User = sequelize.define('users',{
             where:{
                 is_deleted: 0
             }
-        }
+        },
     }
 });
 
-module.exports = User;
+function generateToken(user){
+    return jwt.sign(user,process.env.SECRET_TOKEN);
+}
+
+exports.User = User;
+exports.generateToken = generateToken;
