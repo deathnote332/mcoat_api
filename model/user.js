@@ -31,7 +31,9 @@ const User = sequelize.define('users',{
 });
 
 function generateToken(user){
-    return jwt.sign(user,process.env.SECRET_TOKEN);
+    return jwt.sign(user,process.env.SECRET_TOKEN,{
+        expiresIn: 1440
+    });
 }
 
 exports.User = User;

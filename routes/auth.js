@@ -19,7 +19,8 @@ router.post('/', async  (req,res)=>{
     if(!isValidPass) return res.status(400).send("Invalid eamil or password");
   
     user = _.pick(user,['first_name','last_name','email','status','user_type','warehouse','active']);
-    return res.header('x-auth-token',generateToken(user)).send(generateToken(user));
+    res.cookie('token',generateToken(user));
+    return res.send(200);
    
 })
 
