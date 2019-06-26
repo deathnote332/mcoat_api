@@ -23,7 +23,7 @@ router.post('/', async  (req,res)=>{
         maxAge: 86400 * 1000, // 24 hours
         httpOnly: false, // http only, prevents JavaScript cookie access
     });
-    return res.status(200).json({isSuccessful: true, message: "Successfully authenticated", token: req.cookies.token});
+    return res.status(200).json({isSuccessful: true, message: "Successfully authenticated", authToken: req.cookies.token});
    
 })
 
