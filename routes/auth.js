@@ -14,12 +14,12 @@ router.post('/', async  (req,res)=>{
     });
 
     let user = await User.scope('is_deleted').findOne({where:{email: req.body.email}});
-    if(_.isEmpty(user)) return res.status(422).json({isSuccessful: false, message: "Invalid email or password"});
+    if(_.isEmpty(user)) return res.status(200).json({isSuccessful: false, message: "Invalid email or password"});
 
     let password = user.password;
 
     const isValidPass = await bcrypt.compare(req.body.password,password);
-    if(!isValidPass) return res.status(422).json({isSuccessful: false, message: "Invalid email or password"});
+    if(!isValidPass) return res.status(200).json({isSuccessful: false, message: "Invalid email or password"});
   
     user = _.pick(user,['first_name','last_name','email','status','user_type','warehouse','active']);
     res.cookie('token',generateToken(user), {
