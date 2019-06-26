@@ -1,10 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const auth = require('../middleware/auth');
-const Sequelize = require('sequelize');
-const {Products} = require('../model/product');
+const { Products } = require('../model/product');
 
-router.get('/',auth,async (req,res)=>{
+router.get('/',auth ,async (req,res)=>{
     products = await Products.findAll({attributes: ['id', 'brand','description']});
     res.json(products);
 })
