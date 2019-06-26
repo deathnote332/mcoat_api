@@ -8,7 +8,7 @@ const {User,generateToken} = require('../model/user');
 
 router.post('/', async  (req,res)=>{
     const { error } = validate(req.body);
-    if(error) return res.status(422).json({
+    if(error) return res.status(200).json({
         isSuccessful: false,
         message: error.details[0].message
     });
@@ -17,7 +17,6 @@ router.post('/', async  (req,res)=>{
     if(_.isEmpty(user)) return res.status(200).json({isSuccessful: false, message: "Invalid email or password"});
 
     let password = user.password;
-    
 
     const isValidPass = await bcrypt.compare(req.body.password,password);
     if(!isValidPass) return res.status(200).json({isSuccessful: false, message: "Invalid email or password"});
