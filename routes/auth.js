@@ -20,7 +20,7 @@ router.post('/', async  (req,res)=>{
   
     user = _.pick(user,['first_name','last_name','email','status','user_type','warehouse','active']);
     res.cookie('token',generateToken(user));
-    return res.status(200).json({isSuccessful: true, message: "Successfully authenticated", token: generateToken(user)});
+    return res.status(200).json({isSuccessful: true, message: "Successfully authenticated", token: req.cookies.token});
    
 })
 
