@@ -22,11 +22,8 @@ router.post('/', async  (req,res)=>{
     if(!isValidPass) return res.status(200).json({isSuccessful: false, message: "Invalid email or password"});
   
     user = _.pick(user,['first_name','last_name','email','status','user_type','warehouse','active']);
-    res.cookie('token',generateToken(user), {
-        maxAge: 86400 * 1000, // 24 hours
-        httpOnly: false, // http only, prevents JavaScript cookie access
-    });
-    return res.status(200).json({isSuccessful: true, message: "Successfully authenticated"});
+    
+    return res.status(200).json({isSuccessful: true, message: "Successfully authenticated", token: generateToken(user)});
    
 })
 
