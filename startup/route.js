@@ -7,5 +7,5 @@ module.exports = function (app){
     app.use(bodyParser.json())
     app.use(bodyParser.urlencoded({ extended: false }))
     app.use('/api/auth',auth);
-    app.use('/product',products);
+    app.use('/api/product',products);
 }
