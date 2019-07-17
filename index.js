@@ -15,6 +15,10 @@ var io = require('socket.io')(http);
 
 io.on('connection', function(socket){
     console.log('a user connected');
+
+    socket.on('user-activity', function(activity){
+      io.emit('user-activity', activity);
+    });
 });
 
 const port = process.env.PORT || 3000;
